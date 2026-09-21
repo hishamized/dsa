@@ -2,6 +2,8 @@
 // Write, Edit and Run your C# code using C# Online Compiler
 
 using System;
+using System.Formats.Tar;
+using System.Transactions;
 public class Node {
     public  int data;
     public Node next;
@@ -22,6 +24,11 @@ public class HelloWorld
         head = AppendNode(head, 40);
         head = PrependNode(head, 9);
         head = PrependNode(head, 8);
+        head = AddNodeAtPosition(head, 900, 2);
+        head = AddNodeAtPosition(head, 901, 0);
+        head = AddNodeAtPosition(head, 902, 7);
+        head = AddNodeAtPosition(head, 902, 9);
+        head = AddNodeAtPosition(head, 903, 11);
         DisplayList(head);
         
     }
@@ -65,4 +72,41 @@ public class HelloWorld
         head = n;
         return head;
     }
-}
+    static Node AddNodeAtPosition(Node head, int data, int pos)
+    {
+        Node n = new Node(data);
+        if(head == null)
+        {
+            head = n;
+            head.next = null;
+            return  head;
+        } 
+        if(head.next == null && pos != 0)
+        {
+            Console.WriteLine("Position outside the bounds of the list");
+            return head;
+        }
+        if (pos == 0)
+        {
+            n.next = head;
+            return n;
+        }
+        int count = 0;
+        Node prev = head;
+        Node curr = head.next;
+        while(count != pos - 1)
+        {
+            prev = prev.next;
+            if(curr.next == null && pos - 2 != count)
+            {
+                Console.WriteLine("Position outside the bounds of the list");
+                return head;
+            }
+            curr = curr.next;
+            count += 1;
+        }
+        prev.next = n;
+        n.next = curr;
+        return head;
+    }
+} 
