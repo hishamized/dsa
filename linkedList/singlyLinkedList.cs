@@ -14,24 +14,6 @@ public class Node {
 }
 public class HelloWorld
 {
-
-    public static void Main(string[] args)
-    {
-        Node head = null;
-        head = AppendNode(head, 10);
-        head = AppendNode(head, 20);
-        head = AppendNode(head, 30);
-        head = AppendNode(head, 40);
-        head = PrependNode(head, 9);
-        head = PrependNode(head, 8);
-        head = AddNodeAtPosition(head, 900, 2);
-        head = AddNodeAtPosition(head, 901, 0);
-        head = AddNodeAtPosition(head, 902, 7);
-        head = AddNodeAtPosition(head, 902, 9);
-        head = AddNodeAtPosition(head, 903, 11);
-        DisplayList(head);
-        
-    }
     static void DisplayList(Node head){
         if(head == null){
             Console.WriteLine("The linked list is empty\n");
@@ -44,6 +26,7 @@ public class HelloWorld
             if(temp != null)
                 Console.Write("-->");
         }  while(temp != null);
+        Console.WriteLine("\n");
     }
     
     static Node AppendNode(Node head, int data){
@@ -102,11 +85,62 @@ public class HelloWorld
                 Console.WriteLine("Position outside the bounds of the list");
                 return head;
             }
-            curr = curr.next;
+            curr = curr.next!;
             count += 1;
         }
         prev.next = n;
         n.next = curr;
         return head;
     }
+    static Node DeleteAtBeginning(Node head)
+    {
+        if(head == null)
+        {
+            Console.WriteLine("The linked list is empty");
+        }
+        head = head.next;
+        return head;
+    }
+    static Node DeleteAtEnd(Node head)
+    {
+        if(head == null)
+        {
+            Console.WriteLine("The linked list is empty");
+        }
+        if(head.next == null)
+        {
+            return null;
+        }
+        Node prev = head;
+        Node temp = head.next;
+        while(temp.next != null)
+        {
+            prev = prev.next;
+            temp = temp.next;
+        }
+        prev.next = null;
+        return head;
+    }
+        public static void Main(string[] args)
+    {
+        Node head = null;
+        head = AppendNode(head, 10);
+        head = AppendNode(head, 20);
+        head = AppendNode(head, 30);
+        head = AppendNode(head, 40);
+        head = PrependNode(head, 9);
+        head = PrependNode(head, 8);
+        head = AddNodeAtPosition(head, 900, 2);
+        head = AddNodeAtPosition(head, 901, 0);
+        head = AddNodeAtPosition(head, 902, 7);
+        head = AddNodeAtPosition(head, 902, 9);
+        head = AddNodeAtPosition(head, 903, 11);
+        DisplayList(head);
+        head = DeleteAtBeginning(head);
+        DisplayList(head);
+        head = DeleteAtEnd(head);
+        DisplayList(head);
+        
+    }
+
 } 
