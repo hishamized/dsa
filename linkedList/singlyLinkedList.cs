@@ -6,7 +6,7 @@ using System.Formats.Tar;
 using System.Transactions;
 public class Node {
     public  int data;
-    public Node next;
+    public Node? next;
     public Node(int v){
         this.data = v;
         this.next = null;
@@ -121,6 +121,66 @@ public class HelloWorld
         prev.next = null;
         return head;
     }
+    static Node DeleteNodeAtIndex(Node head, int index)
+    {
+        if(head == null)
+            Console.WriteLine("The linked list is empty");
+        if(head!.next == null)
+            return null;
+        if(index == 0)
+        {
+            return head.next;
+        }
+        Node prev = head;
+        Node temp = head.next;
+        int count = 0;
+        while(count != index - 1)
+        {
+            if(temp.next == null && count + 1 != index){
+                Console.WriteLine("Input index out of the bounds of the linked list");
+                return head;
+            }
+
+            prev = prev.next;
+            temp = temp.next;
+            count += 1;
+        }
+        if(temp!.next != null)
+        {
+            prev.next = temp.next;
+        } else
+        {
+            prev.next = null;
+        }
+        return head;
+    }
+    static Node DeleteFirstNodeWithValue(Node head, int value)
+    {
+        if(head == null)
+        {
+            Console.WriteLine("The linked list is empty");
+            return head;
+        }
+        if(head.data == value)
+        {
+            head = head.next;
+            return head;
+        }
+        Node prev = head;
+        Node curr = head.next;
+        while(curr.data != value)
+        {
+            if(curr.next == null && curr.next.data != value)
+            {
+                Console.WriteLine("No node in the linked list contains the input value");
+                return head;
+            }
+            prev = prev.next;
+            curr = curr.next;
+        }
+        prev!.next = curr.next;
+        return head;
+    }
         public static void Main(string[] args)
     {
         Node head = null;
@@ -140,7 +200,12 @@ public class HelloWorld
         DisplayList(head);
         head = DeleteAtEnd(head);
         DisplayList(head);
-        
+        head = DeleteNodeAtIndex(head, 4);
+        DisplayList(head);
+        head = AppendNode(head, 111);
+        DisplayList(head);
+        head = DeleteFirstNodeWithValue(head, 111);
+        DisplayList(head);
     }
 
 } 
